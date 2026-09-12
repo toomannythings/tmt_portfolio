@@ -1,0 +1,47 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Позволяет открывать /admin локально на localhost:8081 без настоящего логина.
+# Уберите или закомментируйте перед первым деплоем на Netlify.
+local_backend: true
+
+publish_mode: simple
+media_folder: "public/covers"
+public_folder: "/covers"
+
+collections:
+  - name: "work"
+    label: "Работы"
+    label_singular: "Проект"
+    folder: "src/content/work"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{year}} — {{title}}"
+    sortable_fields: ["year", "order", "title"]
+    fields:
+      - { label: "Название", name: "title", widget: "string" }
+      - { label: "Клиент", name: "client", widget: "string", required: false }
+      - label: "Категория"
+        name: "category"
+        widget: "select"
+        options: ["Реклама", "Shortform / Reels", "Клип", "Документалистика", "Свадьба", "Корпоратив", "Другое"]
+      - { label: "Год", name: "year", widget: "number", value_type: "int" }
+      - { label: "Роль в проекте", name: "role", widget: "string", required: false }
+      - label: "Ссылка на видео"
+        name: "video"
+        widget: "string"
+        hint: "Прямая ссылка на файл видео (например, с Cloudflare R2, Bunny или Cloudinary). Не загружайте видео сюда напрямую."
+      - label: "Обложка"
+        name: "poster"
+        widget: "image"
+        hint: "Изображение-превью, показывается в списке работ и как постер видео."
+      - { label: "Краткое описание", name: "summary", widget: "text" }
+      - { label: "Порядок внутри года", name: "order", widget: "number", value_type: "int", default: 0 }
+      - { label: "Показывать на главной как избранное", name: "featured", widget: "boolean", default: false }
+      - label: "Заметки (необязательно)"
+        name: "body"
+        widget: "markdown"
+        required: false

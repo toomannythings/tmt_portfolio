@@ -1,0 +1,166 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  const sorted = entries.sort((a, b) => {
+    if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+    return a.data.order - b.data.order;
+  });
+
+  return sorted.map((entry, index) => ({
+    params: { slug: entry.slug },
+    props: {
+      entry,
+      prev: sorted[index - 1] ?? null,
+      next: sorted[index + 1] ?? null,
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { title, client, category, year, role, video, poster, summary } = entry.data;
+---
+<Base title={`${title} — Герман Сенин`} description={summary}>
+  <article class="work wrap">
+    <header class="work-head hairline-bottom">
+      <h1>{title}</h1>
+      <dl class="work-meta">
+        {client && (
+          <div><dt>Клиент</dt><dd>{client}</dd></div>
+        )}
+        <div><dt>Категория</dt><dd>{category}</dd></div>
+        <div><dt>Год</dt><dd>{year}</dd></div>
+        {role && (
+          <div><dt>Роль</dt><dd>{role}</dd></div>
+        )}
+      </dl>
+    </header>
+
+    <div class="player">
+      <video controls preload="metadata" poster={poster} playsinline>
+        <source src={video} />
+        Ваш браузер не поддерживает воспроизведение видео.
+      </video>
+    </div>
+
+    {summary && <p class="summary">{summary}</p>}
+
+    <nav class="pager hairline-top" aria-label="Другие работы">
+      {prev ? (
+        <a class="pager-link" href={`/work/${prev.slug}`}>
+          <span class="pager-label">Предыдущая</span>
+          <span class="pager-title">{prev.data.title}</span>
+        </a>
+      ) : <span></span>}
+      {next ? (
+        <a class="pager-link pager-link--next" href={`/work/${next.slug}`}>
+          <span class="pager-label">Следующая</span>
+          <span class="pager-title">{next.data.title}</span>
+        </a>
+      ) : <span></span>}
+    </nav>
+  </article>
+
+  <style>
+    .work {
+      padding-top: clamp(40px, 6vw, 72px);
+    }
+
+    .work-head {
+      display: grid;
+      gap: 24px;
+      padding-bottom: 28px;
+      grid-template-columns: minmax(0, 7fr) minmax(220px, 5fr);
+      align-items: end;
+    }
+
+    .work-head h1 {
+      margin: 0;
+      font-size: var(--step-3);
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .work-meta {
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      border-left: 1px solid var(--line);
+      padding-left: 24px;
+    }
+
+    .work-meta dt {
+      font-size: 0.75rem;
+      color: var(--grey);
+    }
+
+    .work-meta dd {
+      margin: 4px 0 0;
+      font-size: 0.92rem;
+    }
+
+    .player {
+      margin-top: 40px;
+      background: var(--ink);
+    }
+
+    .player video {
+      width: 100%;
+      max-height: 78vh;
+    }
+
+    .summary {
+      max-width: 62ch;
+      margin: 32px 0 0;
+      color: var(--grey);
+      font-size: var(--step-1);
+      line-height: 1.5;
+    }
+
+    .pager {
+      margin-top: 80px;
+      padding: 24px 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .pager-link {
+      display: grid;
+      gap: 6px;
+    }
+
+    .pager-link--next {
+      text-align: right;
+    }
+
+    .pager-label {
+      font-size: 0.75rem;
+      color: var(--grey);
+    }
+
+    .pager-title {
+      font-size: var(--step-1);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    @media (max-width: 560px) {
+      .work-head {
+        grid-template-columns: 1fr;
+      }
+
+      .work-meta {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 16px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</Base>

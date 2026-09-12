@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Обо мне — Герман Сенин" description="Видеомонтажёр Герман Сенин: опыт, подход к монтажу и инструменты.">
+  <section class="about wrap hairline-bottom">
+    <h1>Монтирую так, чтобы ролик держал внимание с первого кадра.</h1>
+    <div class="about-grid">
+      <p>
+        Я занимаюсь видеомонтажом: собираю ролики от первого черновика до финальной цветокоррекции
+        и звука. Работал в продакшне коротких вирусных форматов, где счёт идёт на секунды удержания
+        зрителя, и это определяет мой подход — жёсткий темп, точный ритм и монтаж под звук.
+      </p>
+      <dl class="facts">
+        <div>
+          <dt>Инструменты</dt>
+          <dd>Adobe Premiere Pro, Media Encoder, генерация озвучки и видео нейросетями</dd>
+        </div>
+        <div>
+          <dt>Формат работы</dt>
+          <dd>Удалённо, полный цикл постпродакшна</dd>
+        </div>
+        <div>
+          <dt>Язык</dt>
+          <dd>Русский, английский (B2)</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <style>
+    .about {
+      padding-top: clamp(56px, 9vw, 100px);
+      padding-bottom: 72px;
+    }
+
+    .about h1 {
+      margin: 0 0 40px;
+      font-size: var(--step-3);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      max-width: 20ch;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(220px, 5fr);
+      gap: 32px;
+    }
+
+    .about-grid p {
+      font-size: var(--step-1);
+      line-height: 1.6;
+      max-width: 58ch;
+      margin: 0;
+    }
+
+    .facts {
+      margin: 0;
+      display: grid;
+      gap: 20px;
+      border-left: 1px solid var(--line);
+      padding-left: 24px;
+    }
+
+    .facts dt {
+      font-size: 0.75rem;
+      color: var(--grey);
+    }
+
+    .facts dd {
+      margin: 4px 0 0;
+    }
+
+    @media (max-width: 560px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .facts {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 16px;
+      }
+    }
+  </style>
+</Base>
