@@ -4,7 +4,6 @@ backend:
 
 # Позволяет открывать /admin локально на localhost:8081 без настоящего логина.
 # Уберите или закомментируйте перед первым деплоем на Netlify.
-local_backend: true
 
 publish_mode: simple
 media_folder: "public/covers"
