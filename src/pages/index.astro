@@ -9,22 +9,33 @@ const works = entries.sort((a, b) => {
 });
 ---
 <Base title="Герман Сенин — видеомонтаж">
-  <section class="hero wrap hairline-bottom">
-    <h1>Монтаж, который держит темп и не отпускает кадр.</h1>
-    <dl class="hero-meta">
-      <div>
-        <dt>Специализация</dt>
-        <dd>Видеомонтаж, режиссура монтажа, постпродакшн</dd>
-      </div>
-      <div>
-        <dt>База</dt>
-        <dd>Казахстан — работаю удалённо, съёмки по договорённости</dd>
-      </div>
-      <div>
-        <dt>Статус</dt>
-        <dd>Открыт для проектов</dd>
-      </div>
-    </dl>
+  <section class="hero" aria-label="Заставка">
+    <svg class="hero-arcs" viewBox="0 0 800 800" aria-hidden="true">
+      <circle cx="760" cy="120" r="90" />
+      <circle cx="760" cy="120" r="180" />
+      <circle cx="760" cy="120" r="270" />
+      <circle cx="760" cy="120" r="360" />
+    </svg>
+
+    <div class="hero-inner wrap">
+      <p class="hero-eyebrow">Видеомонтаж — Казахстан / удалённо</p>
+      <h1 class="hero-name">Сенин</h1>
+
+      <dl class="hero-meta">
+        <div>
+          <dt>Специализация</dt>
+          <dd>Монтаж, режиссура монтажа, постпродакшн</dd>
+        </div>
+        <div>
+          <dt>Подход</dt>
+          <dd>Темп и ритм под звук — опыт коротких вирусных форматов</dd>
+        </div>
+        <div>
+          <dt>Статус</dt>
+          <dd>Открыт для проектов</dd>
+        </div>
+      </dl>
+    </div>
   </section>
 
   <section class="index wrap" aria-label="Список работ">
@@ -36,6 +47,9 @@ const works = entries.sort((a, b) => {
 
     {works.map((work) => (
       <a class="index-row hairline-bottom" href={`/work/${work.slug}`} data-preview={work.data.poster}>
+        <span class="row-thumb">
+          <img src={work.data.poster} alt="" loading="lazy" />
+        </span>
         <span class="row-title">{work.data.title}</span>
         <span class="row-category only-wide">{work.data.category}</span>
         <span class="row-year">{work.data.year}</span>
@@ -53,44 +67,67 @@ const works = entries.sort((a, b) => {
 
   <style>
     .hero {
-      padding-top: clamp(56px, 10vw, 120px);
-      padding-bottom: clamp(40px, 6vw, 64px);
-      display: grid;
-      grid-template-columns: minmax(0, 8fr) minmax(220px, 3fr);
-      gap: 32px;
-      align-items: end;
+      position: relative;
+      background: var(--ink);
+      color: var(--bg);
+      overflow: hidden;
     }
 
-    .hero h1 {
+    .hero-arcs {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(70vw, 800px);
+      height: auto;
+      opacity: 0.9;
+    }
+
+    .hero-arcs circle {
+      fill: none;
+      stroke: var(--bg);
+      stroke-width: 1;
+      opacity: 0.35;
+    }
+
+    .hero-inner {
+      position: relative;
+      padding-top: clamp(64px, 11vw, 120px);
+      padding-bottom: clamp(48px, 8vw, 96px);
+    }
+
+    .hero-eyebrow {
+      margin: 0 0 8px;
+      font-size: 0.85rem;
+      color: var(--grey-light);
+    }
+
+    .hero-name {
       margin: 0;
-      font-size: var(--step-4);
-      line-height: 1.02;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      max-width: 14ch;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.82;
+      font-size: clamp(4.5rem, 20vw, 15rem);
     }
 
     .hero-meta {
-      margin: 0;
+      margin: clamp(32px, 6vw, 56px) 0 0;
       display: grid;
-      gap: 20px;
-      border-left: 1px solid var(--line);
-      padding-left: 24px;
-    }
-
-    .hero-meta div {
-      display: grid;
-      gap: 4px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      padding-top: 20px;
     }
 
     .hero-meta dt {
-      font-size: 0.78rem;
-      color: var(--grey);
+      font-size: 0.75rem;
+      color: var(--grey-light);
     }
 
     .hero-meta dd {
-      margin: 0;
+      margin: 6px 0 0;
       font-size: 0.95rem;
+      line-height: 1.4;
     }
 
     .index {
@@ -100,10 +137,10 @@ const works = entries.sort((a, b) => {
     .index-head,
     .index-row {
       display: grid;
-      grid-template-columns: 1fr 180px 90px;
-      align-items: baseline;
+      grid-template-columns: 56px 1fr 180px 90px;
+      align-items: center;
       gap: 16px;
-      padding: 18px 0;
+      padding: 14px 0;
     }
 
     .index-head {
@@ -111,6 +148,10 @@ const works = entries.sort((a, b) => {
       font-size: 0.8rem;
       padding-top: 12px;
       padding-bottom: 10px;
+    }
+
+    .index-head span:first-child {
+      grid-column: 2;
     }
 
     .index-row {
@@ -125,18 +166,31 @@ const works = entries.sort((a, b) => {
       opacity: 0.55;
     }
 
+    .row-thumb {
+      display: block;
+      width: 56px;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .row-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.35);
+    }
+
     .row-category {
       font-size: 0.85rem;
       color: var(--grey);
       font-weight: 400;
-      align-self: center;
     }
 
     .row-year {
       font-size: 0.85rem;
       color: var(--grey);
       font-weight: 400;
-      align-self: center;
       font-variant-numeric: tabular-nums;
       text-align: right;
     }
@@ -160,7 +214,7 @@ const works = entries.sort((a, b) => {
       position: fixed;
       top: 0;
       left: 0;
-      width: 280px;
+      width: 300px;
       aspect-ratio: 16 / 10;
       pointer-events: none;
       opacity: 0;
@@ -168,13 +222,14 @@ const works = entries.sort((a, b) => {
       transition: opacity 0.15s ease;
       z-index: 40;
       border: 1px solid var(--ink);
-      background: var(--bg);
+      background: var(--ink);
     }
 
     .preview img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: grayscale(1) contrast(1.35);
     }
 
     .preview.is-visible {
@@ -184,6 +239,21 @@ const works = entries.sort((a, b) => {
     @media (hover: none) {
       .preview {
         display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .index-head,
+      .index-row {
+        grid-template-columns: 44px 1fr 70px;
+      }
+
+      .index-head span:first-child {
+        grid-column: 2;
+      }
+
+      .row-thumb {
+        width: 44px;
       }
     }
   </style>
