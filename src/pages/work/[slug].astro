@@ -28,12 +28,12 @@ const { title, client, category, year, role, video, poster, summary } = entry.da
       <h1>{title}</h1>
       <dl class="work-meta">
         {client && (
-          <div><dt>Клиент</dt><dd>{client}</dd></div>
+          <div><dt>Client</dt><dd>{client}</dd></div>
         )}
-        <div><dt>Категория</dt><dd>{category}</dd></div>
-        <div><dt>Год</dt><dd>{year}</dd></div>
+        <div><dt>Category</dt><dd>{category}</dd></div>
+        <div><dt>Year</dt><dd>{year}</dd></div>
         {role && (
-          <div><dt>Роль</dt><dd>{role}</dd></div>
+          <div><dt>Role</dt><dd>{role}</dd></div>
         )}
       </dl>
     </header>
@@ -41,22 +41,22 @@ const { title, client, category, year, role, video, poster, summary } = entry.da
     <div class="player">
       <video controls preload="metadata" poster={poster} playsinline>
         <source src={video} />
-        Ваш браузер не поддерживает воспроизведение видео.
+        Your browser does not support video playback.
       </video>
     </div>
 
     {summary && <p class="summary">{summary}</p>}
 
-    <nav class="pager hairline-top" aria-label="Другие работы">
+    <nav class="pager hairline-top" aria-label="Other projects">
       {prev ? (
         <a class="pager-link" href={`/work/${prev.slug}`}>
-          <span class="pager-label">Предыдущая</span>
+          <span class="pager-label">Previous</span>
           <span class="pager-title">{prev.data.title}</span>
         </a>
       ) : <span></span>}
       {next ? (
         <a class="pager-link pager-link--next" href={`/work/${next.slug}`}>
-          <span class="pager-label">Следующая</span>
+          <span class="pager-label">Next</span>
           <span class="pager-title">{next.data.title}</span>
         </a>
       ) : <span></span>}
